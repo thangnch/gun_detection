@@ -1,8 +1,3 @@
-#############################################
-# Object detection - YOLO - OpenCV
-# Author : Arun Ponnusamy   (July 16, 2018)
-# Website : http://www.arunponnusamy.com
-############################################
 
 import time
 import datetime
@@ -10,6 +5,7 @@ import cv2
 import argparse
 import numpy as np
 
+# Cai dat tham so dau vao
 ap = argparse.ArgumentParser()
 ap.add_argument('-i', '--image', required=True,
                 help='path to input image')
@@ -28,6 +24,7 @@ def get_output_layers(net):
     return output_layers
 
 
+# Ham ve khung chu nhat quanh vat the nhan dang
 def draw_prediction(img, class_id, confidence, x, y, x_plus_w, y_plus_h):
     label = str(classes[class_id])
 
@@ -39,13 +36,12 @@ def draw_prediction(img, class_id, confidence, x, y, x_plus_w, y_plus_h):
 
 def detect_gun(net,output_layers,image):
 
+    # Lay kich thuoc anh dau vao
     Width = image.shape[1]
     Height = image.shape[0]
-  #  image = cv2.resize(image, (416, int(416*Height/Width)))
-   # Width = image.shape[1]
-   # Height = image.shape[0]
     scale = 0.00392
 
+    # Doc du lieu anh va dua vao mang YOLO
     blob = cv2.dnn.blobFromImage(image, scale, (416, 416), (0, 0, 0), True, crop=False)
     net.setInput(blob)
     outs = net.forward(output_layers)
